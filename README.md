@@ -19,13 +19,13 @@ Clean Architecture Flow
 
 
 
-Clean Architecture Layers by Modules
+Clean Architecture Layers by Module
 ------------------------------------
 ![](https://github.com/devendroid/X-Data/blob/master/Android-CleanArch-MVP/layers-by-module.png)
 
 
 
-Clean Architecture Layers by Modules or Packages
+Clean Architecture Layers by Module or Package
 ------------------------------------------------
 ![](https://github.com/devendroid/X-Data/blob/master/Android-CleanArch-MVP/layers-by-types.png)
 
