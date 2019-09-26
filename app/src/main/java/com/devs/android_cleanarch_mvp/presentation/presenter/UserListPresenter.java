@@ -45,8 +45,6 @@ public class UserListPresenter implements Presenter {
         this.requestUserList();
     }
 
-
-
     private void requestUserList() {
         this.getUserListUseCase.execute(new UserListObserver(), null);
     }

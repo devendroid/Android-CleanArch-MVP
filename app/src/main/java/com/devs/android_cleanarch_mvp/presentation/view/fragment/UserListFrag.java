@@ -1,16 +1,36 @@
-package com.devs.android_cleanarch_mvp.presentation.view.activity;
+package com.devs.android_cleanarch_mvp.presentation.view.fragment;
 
-import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.text.Html;
+import android.view.InflateException;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
-
+import com.devs.android_cleanarch_mvp.MyApplication;
 import com.devs.android_cleanarch_mvp.R;
 import com.devs.android_cleanarch_mvp.data.model.mapper.UserMapper;
 import com.devs.android_cleanarch_mvp.data.repository.UserRepositoryImp;
@@ -19,15 +39,27 @@ import com.devs.android_cleanarch_mvp.domain.interactor.GetUserList;
 import com.devs.android_cleanarch_mvp.domain.repository.UserRepository;
 import com.devs.android_cleanarch_mvp.presentation.model.UserModel;
 import com.devs.android_cleanarch_mvp.presentation.model.mapper.UserModelMapper;
+import com.devs.android_cleanarch_mvp.presentation.navigation.Navigator;
 import com.devs.android_cleanarch_mvp.presentation.presenter.UserListPresenter;
 import com.devs.android_cleanarch_mvp.presentation.view.adapter.UserAdapter;
 import com.devs.android_cleanarch_mvp.presentation.viewer.UserListViewer;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
+import javax.inject.Inject;
 
-public class UserListActivity extends AppCompatActivity implements UserListViewer {
+/**
+ * Created by ${Deven} on 29/4/19.
+ */
+public class UserListFrag extends Fragment implements UserListViewer {
 
+    private static final String TAG = UserListFrag.class.getSimpleName();
+    private View parentView;
+
+    @Inject
+    Navigator navigator;
 
     private RecyclerView recyclerView;
     private RelativeLayout rlRetry, rlProgress;
@@ -37,23 +69,45 @@ public class UserListActivity extends AppCompatActivity implements UserListViewe
     private UserAdapter usersAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_list);
+    public void onStart() {
+        super.onStart();
+    }
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        try {
+            parentView = inflater.inflate(R.layout.frag_user_list, container, false);
+
+        } catch (InflateException e) {
+            e.printStackTrace();
+        }
+        return parentView;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        ((MyApplication)getActivity().getApplication()).getAppComponent().inject(this);
 
         // Init
-        recyclerView = findViewById(R.id.rv_users);
+        recyclerView = view.findViewById(R.id.rv_users);
         usersAdapter = new UserAdapter(context());
-        //usersAdapter.setOnItemClickListener(onItemClickListener);
+        usersAdapter.setOnItemClickListener(new UserAdapter.OnItemClickListener(){
+            @Override
+            public void onUserItemClicked(UserModel userModel) {
+                navigator.addFragmentWithBack(getActivity(),R.id.fragment_container,
+                        new UserDetailFrag());
+            }
+        });
         recyclerView.setLayoutManager(new LinearLayoutManager(context()));
         recyclerView.setAdapter(usersAdapter);
-        rlRetry = findViewById(R.id.rl_retry);
-        rlProgress = findViewById(R.id.rl_progress);
-        btnRetry = findViewById(R.id.bt_retry);
+        rlRetry = view.findViewById(R.id.rl_retry);
+        rlProgress = view.findViewById(R.id.rl_progress);
+        btnRetry = view.findViewById(R.id.bt_retry);
         btnRetry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                userListPresenter.loadUserList();
             }
         });
 
@@ -69,19 +123,19 @@ public class UserListActivity extends AppCompatActivity implements UserListViewe
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         userListPresenter.resume();
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         userListPresenter.pause();
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         userListPresenter.destroy();
     }
@@ -122,12 +176,11 @@ public class UserListActivity extends AppCompatActivity implements UserListViewe
 
     @Override
     public void showError(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public Context context() {
-        return getApplicationContext();
+        return getActivity().getApplicationContext();
     }
-
 }
