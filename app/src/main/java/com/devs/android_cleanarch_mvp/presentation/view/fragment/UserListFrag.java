@@ -26,12 +26,16 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.devs.android_cleanarch_mvp.MyApplication;
 import com.devs.android_cleanarch_mvp.R;
+import com.devs.android_cleanarch_mvp.data.cache.AppSession;
 import com.devs.android_cleanarch_mvp.data.model.mapper.UserMapper;
 import com.devs.android_cleanarch_mvp.data.repository.UserRepositoryImp;
 import com.devs.android_cleanarch_mvp.data.repository.datasource.UserDataStoreFactory;
@@ -41,6 +45,7 @@ import com.devs.android_cleanarch_mvp.presentation.model.UserModel;
 import com.devs.android_cleanarch_mvp.presentation.model.mapper.UserModelMapper;
 import com.devs.android_cleanarch_mvp.presentation.navigation.Navigator;
 import com.devs.android_cleanarch_mvp.presentation.presenter.UserListPresenter;
+import com.devs.android_cleanarch_mvp.presentation.view.activity.MainActivity;
 import com.devs.android_cleanarch_mvp.presentation.view.adapter.UserAdapter;
 import com.devs.android_cleanarch_mvp.presentation.viewer.UserListViewer;
 
@@ -90,6 +95,12 @@ public class UserListFrag extends Fragment implements UserListViewer {
         ((MyApplication)getActivity().getApplication()).getAppComponent().inject(this);
 
         // Init
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        ((MainActivity) getActivity()).initToolbar(toolbar);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        actionBar.show();
+        actionBar.setTitle("Home");
+
         recyclerView = view.findViewById(R.id.rv_users);
         usersAdapter = new UserAdapter(context());
         usersAdapter.setOnItemClickListener(new UserAdapter.OnItemClickListener(){
@@ -111,8 +122,8 @@ public class UserListFrag extends Fragment implements UserListViewer {
             }
         });
 
-        UserDataStoreFactory userDataStoreFactory = new UserDataStoreFactory(context());
-        UserRepository userRepository = new UserRepositoryImp(userDataStoreFactory, new UserMapper());
+        UserDataStoreFactory userDataStoreFactory = new UserDataStoreFactory(context(), new UserMapper() );
+        UserRepository userRepository = new UserRepositoryImp(userDataStoreFactory, new AppSession() );
         GetUserList getUserList = new GetUserList(userRepository);
         userListPresenter = new UserListPresenter(getUserList, new UserModelMapper());
 

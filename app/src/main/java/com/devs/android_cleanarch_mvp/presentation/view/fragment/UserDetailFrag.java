@@ -13,6 +13,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,6 +29,7 @@ import com.devs.android_cleanarch_mvp.domain.repository.UserRepository;
 import com.devs.android_cleanarch_mvp.presentation.model.UserModel;
 import com.devs.android_cleanarch_mvp.presentation.model.mapper.UserModelMapper;
 import com.devs.android_cleanarch_mvp.presentation.presenter.UserListPresenter;
+import com.devs.android_cleanarch_mvp.presentation.view.activity.MainActivity;
 import com.devs.android_cleanarch_mvp.presentation.view.adapter.UserAdapter;
 import com.devs.android_cleanarch_mvp.presentation.viewer.UserListViewer;
 
@@ -41,7 +45,6 @@ public class UserDetailFrag extends Fragment {
 
     private RelativeLayout rlRetry, rlProgress;
     private Button btnRetry;
-
 
     @Override
     public void onStart() {
@@ -63,6 +66,13 @@ public class UserDetailFrag extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Init
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        ((MainActivity) getActivity()).setSupportActionBar(toolbar);//.initToolbar(toolbar);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        actionBar.show();
+        actionBar.setTitle("User Detail");
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         rlRetry = view.findViewById(R.id.rl_retry);
         rlProgress = view.findViewById(R.id.rl_progress);
         btnRetry = view.findViewById(R.id.bt_retry);

@@ -1,10 +1,13 @@
 package com.devs.android_cleanarch_mvp.presentation.navigation;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.devs.android_cleanarch_mvp.presentation.utils.Utilities;
 import com.devs.android_cleanarch_mvp.presentation.view.activity.MainActivity;
 
 import javax.inject.Inject;
@@ -16,6 +19,8 @@ import javax.inject.Singleton;
 
 @Singleton
 public class Navigator {
+
+    private static final String TAG = Navigator.class.getSimpleName();
 
     @Inject
     public Navigator(){}
@@ -39,6 +44,23 @@ public class Navigator {
         final FragmentTransaction fragmentTransaction = ((MainActivity)context).getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(containerId, targetFragment);
         fragmentTransaction.commit();
+    }
+
+    public void popFragment(Context context) {
+        FragmentManager fragmentManager = ((MainActivity)context).getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack();
+            //  Toast.makeText(this,"pop",Toast.LENGTH_SHORT).show();
+            Log.i(TAG,
+                    "stack count: " + fragmentManager.getBackStackEntryCount());
+        }
+    }
+
+    public void popAllFragments(Context context) {
+        FragmentManager fm = ((MainActivity)context).getSupportFragmentManager();;
+        for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+            fm.popBackStack();
+        }
     }
 }
 

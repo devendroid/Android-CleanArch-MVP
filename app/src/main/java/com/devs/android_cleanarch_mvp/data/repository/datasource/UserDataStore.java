@@ -5,6 +5,8 @@ package com.devs.android_cleanarch_mvp.data.repository.datasource;
  */
 
 import com.devs.android_cleanarch_mvp.data.model.UserDto;
+import com.devs.android_cleanarch_mvp.domain.model.ApiResponse;
+import com.devs.android_cleanarch_mvp.domain.model.User;
 
 import java.util.List;
 
@@ -19,13 +21,15 @@ public interface UserDataStore {
     /**
      * Get an {@link Observable} which will emit a List of {@link UserDto}.
      */
-    Observable<Response<List<UserDto>>> userDtoList();
+    Observable<ApiResponse<List<User>>> userDtoList();
 
     /**
      * Get an {@link Observable} which will emit a {@link UserDto} by its id.
      *
      * @param userId The id to retrieve user data.
      */
-    Observable<Response<UserDto>> userDtoDetails(final int userId);
+    Observable<ApiResponse<User>> userDtoDetails(final int userId);
+
+    Observable<ApiResponse<User>> userDtoLogin();
 
 }

@@ -5,9 +5,11 @@ package com.devs.android_cleanarch_mvp.data.model.mapper;
  */
 
 import com.devs.android_cleanarch_mvp.data.model.UserDto;
+import com.devs.android_cleanarch_mvp.domain.model.ApiResponse;
 import com.devs.android_cleanarch_mvp.domain.model.User;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Response;
@@ -43,17 +45,22 @@ public class UserMapper {
      * @param userEntityCollection Object Collection to be transformed.
      * @return {@link User} if valid {@link UserDto} otherwise null.
      */
-    public List<User> transform(Response<List<UserDto>> userEntityCollection) {
+    public ApiResponse<List<User>> transform(Response<List<UserDto>> userEntityCollection) {
 
-        final List<User> userList = new ArrayList<>();
+        final ApiResponse<List<User>> apiResponse = new ApiResponse();
+
         if (userEntityCollection.body() != null) {
+            apiResponse.setCode(userEntityCollection.code());
+            apiResponse.setMessage(userEntityCollection.message());
+            List<User> list = new ArrayList<>();
             for (UserDto userEntity : userEntityCollection.body()) {
                 final User user = transform(userEntity);
                 if (user != null) {
-                    userList.add(user);
+                    list.add(user);
                 }
             }
+            apiResponse.setBody(list);
         }
-        return userList;
+        return apiResponse;
     }
 }

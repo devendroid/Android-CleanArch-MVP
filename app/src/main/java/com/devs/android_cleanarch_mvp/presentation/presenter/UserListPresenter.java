@@ -7,6 +7,7 @@ package com.devs.android_cleanarch_mvp.presentation.presenter;
 import androidx.annotation.NonNull;
 
 import com.devs.android_cleanarch_mvp.domain.interactor.GetUserList;
+import com.devs.android_cleanarch_mvp.domain.model.ApiResponse;
 import com.devs.android_cleanarch_mvp.domain.model.User;
 import com.devs.android_cleanarch_mvp.presentation.model.UserModel;
 import com.devs.android_cleanarch_mvp.presentation.model.mapper.UserModelMapper;
@@ -55,7 +56,7 @@ public class UserListPresenter implements Presenter {
         this.userListViewer.showUserList(userModelsCollection);
     }
 
-    private final class UserListObserver extends DisposableObserver<List<User>> {
+    private final class UserListObserver extends DisposableObserver<ApiResponse<List<User>>> {
 
         @Override public void onComplete() {
             userListViewer.hideLoading();
@@ -67,8 +68,14 @@ public class UserListPresenter implements Presenter {
             userListViewer.showRetry();
         }
 
-        @Override public void onNext(List<User> users) {
-            UserListPresenter.this.performMappingOnUserList(users);
+        @Override public void onNext(ApiResponse<List<User>> apiResponse) {
+
+           // if(apiResponse.getCode() == 401) {
+                // Show Error or something else
+           // }
+           // else {
+                UserListPresenter.this.performMappingOnUserList(apiResponse.getBody());
+           // }
         }
     }
 
