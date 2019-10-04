@@ -14,7 +14,7 @@ import retrofit2.http.GET;
 public interface RestApi {
 
 
-    public static final String BASEPATH = "https://raw.githubusercontent.com/android10/Sample-Data/master/Android-CleanArchitecture/";
+    public static final String BASEPATH = "https://raw.githubusercontent.com/devendroid/X-Data/master/Android-CleanArch-MVP/";
 
     @GET("users.json")
     Observable<Response<List<UserDto>>> userDtoList();

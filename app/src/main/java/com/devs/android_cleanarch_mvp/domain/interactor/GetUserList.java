@@ -10,6 +10,8 @@ import com.devs.android_cleanarch_mvp.domain.repository.UserRepository;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 
 /**
@@ -20,11 +22,10 @@ public class GetUserList extends UseCase<ApiResponse<List<User>>, Void>{
 
     private UserRepository userRepository;
 
-
+    @Inject
     public GetUserList(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
 
     @Override
     Observable<ApiResponse<List<User>>> buildUseCaseObservable(Void aVoid) {

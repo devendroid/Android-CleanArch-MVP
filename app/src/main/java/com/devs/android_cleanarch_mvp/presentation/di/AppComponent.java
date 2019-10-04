@@ -12,7 +12,7 @@ import dagger.Component;
  */
 
 @Singleton
-@Component
+@Component(modules = AppModule.class)
 public interface AppComponent {
 
    void inject(MainActivity activity);

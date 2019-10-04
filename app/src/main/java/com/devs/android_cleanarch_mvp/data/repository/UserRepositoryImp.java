@@ -15,6 +15,9 @@ import com.devs.android_cleanarch_mvp.domain.repository.UserRepository;
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 import retrofit2.Response;
@@ -22,11 +25,13 @@ import retrofit2.Response;
 /**
  * {@link UserRepository} for retrieving user data.
  */
+@Singleton
 public class UserRepositoryImp implements UserRepository {
 
     private final UserDataStoreFactory userDataStoreFactory;
     private AppSession appSession;
 
+    @Inject
     public UserRepositoryImp(UserDataStoreFactory userDataStoreFactory, AppSession appSession) {
         this.userDataStoreFactory = userDataStoreFactory;
         this.appSession = appSession;

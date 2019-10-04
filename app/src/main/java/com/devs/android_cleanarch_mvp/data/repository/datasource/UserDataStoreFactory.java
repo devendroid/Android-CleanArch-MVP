@@ -9,6 +9,8 @@ import android.content.Context;
 import com.devs.android_cleanarch_mvp.data.cache.AppSession;
 import com.devs.android_cleanarch_mvp.data.model.mapper.UserMapper;
 
+import javax.inject.Inject;
+
 /**
  * Factory that creates different implementations of {@link UserDataStore}.
  */
@@ -19,6 +21,7 @@ public class UserDataStoreFactory {
 
 
 
+    @Inject
     public UserDataStoreFactory(Context context, UserMapper userMapper) {
         this.context = context;
         this.userMapper = userMapper;

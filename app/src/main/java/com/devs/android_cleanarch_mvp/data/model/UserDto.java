@@ -13,7 +13,7 @@ public class UserDto {
     @SerializedName("id")
     private int userId;
 
-    @SerializedName("cover_url")
+    @SerializedName("profile_pic")
     private String coverUrl;
 
     @SerializedName("full_name")

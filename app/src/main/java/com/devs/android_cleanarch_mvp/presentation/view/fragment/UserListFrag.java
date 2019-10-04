@@ -1,21 +1,10 @@
 package com.devs.android_cleanarch_mvp.presentation.view.fragment;
 
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteConstraintException;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.Html;
 import android.view.InflateException;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -65,6 +54,14 @@ public class UserListFrag extends Fragment implements UserListViewer {
 
     @Inject
     Navigator navigator;
+
+    @Inject
+    UserDataStoreFactory userDataStoreFactory;
+    @Inject
+    UserRepository userRepository;
+    @Inject
+    GetUserList getUserList;
+
 
     private RecyclerView recyclerView;
     private RelativeLayout rlRetry, rlProgress;
@@ -122,9 +119,10 @@ public class UserListFrag extends Fragment implements UserListViewer {
             }
         });
 
-        UserDataStoreFactory userDataStoreFactory = new UserDataStoreFactory(context(), new UserMapper() );
-        UserRepository userRepository = new UserRepositoryImp(userDataStoreFactory, new AppSession() );
-        GetUserList getUserList = new GetUserList(userRepository);
+        //UserDataStoreFactory userDataStoreFactory = new UserDataStoreFactory(context(), new UserMapper() );
+        //UserRepository userRepository = new UserRepositoryImp(userDataStoreFactory, new AppSession() );
+
+        //GetUserList getUserList = new GetUserList(userRepository);
         userListPresenter = new UserListPresenter(getUserList, new UserModelMapper());
 
         this.userListPresenter.setView(this);

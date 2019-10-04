@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import retrofit2.Response;
 
 /**
@@ -19,6 +21,11 @@ import retrofit2.Response;
  * domain layer.
  */
 public class UserMapper {
+
+    @Inject
+    UserMapper(){
+
+    }
 
     /**
      * Transform a {@link UserDto} into an {@link User}.
