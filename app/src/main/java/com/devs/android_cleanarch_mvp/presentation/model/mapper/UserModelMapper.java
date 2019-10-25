@@ -7,10 +7,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 /**
  * Created by Deven on 2019-09-07.
  */
+@Singleton
 public class UserModelMapper {
+
+    @Inject
+    UserModelMapper(){}
 
     /**
      * Transform a {@link User} into an {@link UserModel}.
@@ -28,6 +35,8 @@ public class UserModelMapper {
         userModel.setEmail(user.getEmail());
         userModel.setDescription(user.getDescription());
         userModel.setFollowers(user.getFollowers());
+        userModel.setUserName(user.getUserName());
+        userModel.setPassword(user.getPassword());
 
         return userModel;
     }

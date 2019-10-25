@@ -13,6 +13,8 @@ public class UserModel {
         this.userId = userId;
     }
 
+    private String userName;
+    private String password;
     private String coverUrl;
     private String fullName;
     private String email;
@@ -61,5 +63,21 @@ public class UserModel {
 
     public void setFollowers(int followers) {
         this.followers = followers;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

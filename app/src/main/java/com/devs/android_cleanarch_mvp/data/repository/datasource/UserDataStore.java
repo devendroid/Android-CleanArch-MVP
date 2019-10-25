@@ -30,6 +30,8 @@ public interface UserDataStore {
      */
     Observable<ApiResponse<User>> userDtoDetails(final int userId);
 
-    Observable<ApiResponse<User>> userDtoLogin();
+    Observable<ApiResponse<User>> userLogin(String username, String password);
+
+    Observable<ApiResponse<User>> loggedUser();
 
 }

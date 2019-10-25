@@ -16,6 +16,9 @@ import com.devs.android_cleanarch_mvp.presentation.viewer.UserListViewer;
 import java.util.Collection;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import io.reactivex.observers.DisposableObserver;
 
 /**
@@ -31,12 +34,13 @@ public class UserListPresenter implements Presenter {
     private GetUserList getUserListUseCase;
 
 
+    @Inject
     public UserListPresenter(GetUserList getUserListUseCase, UserModelMapper userModelMapper) {
         this.getUserListUseCase = getUserListUseCase;
         this.userModelMapper = userModelMapper;
     }
 
-    public void setView(@NonNull UserListViewer view) {
+    public void setViewer(@NonNull UserListViewer view) {
         this.userListViewer = view;
     }
 

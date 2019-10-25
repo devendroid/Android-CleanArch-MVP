@@ -18,13 +18,15 @@ public class UserDataStoreFactory {
 
     private final Context context;
     private UserMapper userMapper;
+    private AppSession appSession;
 
 
 
     @Inject
-    public UserDataStoreFactory(Context context, UserMapper userMapper) {
+    public UserDataStoreFactory(Context context, UserMapper userMapper, AppSession appSession) {
         this.context = context;
         this.userMapper = userMapper;
+        this.appSession = appSession;
     }
 
     /**
@@ -40,7 +42,7 @@ public class UserDataStoreFactory {
      */
     public UserDataStore createDataStoreDisk() {
         // return new CloudUserDataStore(restApi, this.userCache);
-        return new UserDataStoreDisk(userMapper);
+        return new UserDataStoreDisk(userMapper, appSession);
     }
 
 

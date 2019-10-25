@@ -58,7 +58,23 @@ public class UserDataStoreCloud implements  UserDataStore {
     }
 
     @Override
-    public Observable<ApiResponse<User>> userDtoLogin() {
+    public Observable<ApiResponse<User>> userLogin(String username, String password) {
+        // Login from Server + Perform Mapping
+
+        // Performing transformation from Response<UserDto> to ApiResponse<User> inside Observable
+        Observable<Response<UserDto>> observable = RetroClient.restApi().userLogin();
+        return observable.map(new Function<Response<UserDto>, ApiResponse<User>>() {
+            @Override
+            public ApiResponse<User> apply(Response<UserDto> response) throws Exception {
+                return UserDataStoreCloud.this.userMapper.transformLogin(response);
+            }
+        });
+
+
+    }
+
+    @Override
+    public Observable<ApiResponse<User>> loggedUser() {
         return null;
     }
 

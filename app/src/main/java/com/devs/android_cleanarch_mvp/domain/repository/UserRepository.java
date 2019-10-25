@@ -31,4 +31,6 @@ public interface UserRepository {
 
     Observable<ApiResponse<User>> loggedUser();
 
+    Observable<ApiResponse<User>> userLogin(String username, String password);
+
 }

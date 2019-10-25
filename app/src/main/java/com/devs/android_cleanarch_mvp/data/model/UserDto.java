@@ -28,6 +28,12 @@ public class UserDto {
     @SerializedName("email")
     private String email;
 
+    @SerializedName("user_name")
+    private String userName;
+
+    @SerializedName("password")
+    private String password;
+
     public UserDto() {
         //empty
     }
@@ -62,5 +68,21 @@ public class UserDto {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

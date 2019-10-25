@@ -1,7 +1,6 @@
 package com.devs.android_cleanarch_mvp.presentation.view.fragment;
 
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.InflateException;
 import android.view.LayoutInflater;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,28 +15,14 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.devs.android_cleanarch_mvp.R;
-import com.devs.android_cleanarch_mvp.data.model.mapper.UserMapper;
-import com.devs.android_cleanarch_mvp.data.repository.UserRepositoryImp;
-import com.devs.android_cleanarch_mvp.data.repository.datasource.UserDataStoreFactory;
-import com.devs.android_cleanarch_mvp.domain.interactor.GetUserList;
-import com.devs.android_cleanarch_mvp.domain.repository.UserRepository;
-import com.devs.android_cleanarch_mvp.presentation.model.UserModel;
-import com.devs.android_cleanarch_mvp.presentation.model.mapper.UserModelMapper;
-import com.devs.android_cleanarch_mvp.presentation.presenter.UserListPresenter;
-import com.devs.android_cleanarch_mvp.presentation.view.activity.MainActivity;
-import com.devs.android_cleanarch_mvp.presentation.view.adapter.UserAdapter;
-import com.devs.android_cleanarch_mvp.presentation.viewer.UserListViewer;
-
-import java.util.Collection;
+import com.devs.android_cleanarch_mvp.presentation.view.activity.HomeActivity;
 
 /**
  * Created by ${Deven} on 29/4/19.
  */
-public class UserDetailFrag extends Fragment {
+public class UserDetailFrag extends BaseFragment {
 
     private static final String TAG = UserDetailFrag.class.getSimpleName();
     private View parentView;
@@ -67,7 +51,7 @@ public class UserDetailFrag extends Fragment {
 
         // Init
         Toolbar toolbar = view.findViewById(R.id.toolbar);
-        ((MainActivity) getActivity()).setSupportActionBar(toolbar);//.initToolbar(toolbar);
+        ((HomeActivity) getActivity()).setSupportActionBar(toolbar);//.initToolbar(toolbar);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         actionBar.show();
         actionBar.setTitle("User Detail");
@@ -88,7 +72,7 @@ public class UserDetailFrag extends Fragment {
 //        GetUserList getUserList = new GetUserList(userRepository);
 //        userListPresenter = new UserListPresenter(getUserList, new UserModelMapper());
 //
-//        this.userListPresenter.setView(this);
+//        this.userListPresenter.setViewer(this);
 //        if (savedInstanceState == null) {
 //            userListPresenter.loadUserList();
 //        }

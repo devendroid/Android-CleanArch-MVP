@@ -11,21 +11,20 @@ import org.mockito.junit.MockitoJUnitRunner;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.verifyZeroInteractions;
 
 /**
  * Created by Deven on 2019-09-07.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class GetUserListTest {
+public class GetUserTest {
 
-    private GetUserList getUserList;
+    private GetUser getUser;
 
     @Mock private UserRepository mockUserRepository;
 
     @Before
     public void setUp() {
-        getUserList = new GetUserList(mockUserRepository);
+        getUser = new GetUser(mockUserRepository);
     }
 
     /**
@@ -35,10 +34,10 @@ public class GetUserListTest {
     @Test
     public void testGetUserListUseCaseObservableHappyCase() {
         // 1. Call users method
-        getUserList.buildUseCaseObservable(null);
+        getUser.buildUseCaseObservable(null);
 
         // 2. Verify we called users method
-        verify(mockUserRepository, times(1)).users();
+        verify(mockUserRepository, times(1)).loggedUser();
 
         // 3. Verify no more methods remaining that we called in #1 and not verified in #2,
         // Means just check equity of step #1 and #2, We verified all the methods in #2 thats we called in #1 or not.

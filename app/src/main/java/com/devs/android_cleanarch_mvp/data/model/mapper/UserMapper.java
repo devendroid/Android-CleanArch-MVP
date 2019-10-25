@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import retrofit2.Response;
 
@@ -20,6 +21,7 @@ import retrofit2.Response;
  * Mapper class used to transform {@link UserDto} (in the data layer) to {@link User} in the
  * domain layer.
  */
+@Singleton
 public class UserMapper {
 
     @Inject
@@ -42,6 +44,8 @@ public class UserMapper {
             user.setDescription(userEntity.getDescription());
             user.setFollowers(userEntity.getFollowers());
             user.setEmail(userEntity.getEmail());
+            user.setPassword(userEntity.getPassword());
+            user.setUserName(userEntity.getUserName());
         }
         return user;
     }
@@ -67,6 +71,30 @@ public class UserMapper {
                 }
             }
             apiResponse.setBody(list);
+        }
+        return apiResponse;
+    }
+
+    public ApiResponse<User> transformLogin(Response<UserDto> userEntity) {
+
+        final ApiResponse<User> apiResponse = new ApiResponse();
+
+        if (userEntity.body() != null) {
+            apiResponse.setCode(userEntity.code());
+            apiResponse.setMessage(userEntity.message());
+
+            UserDto userDto = userEntity.body();
+
+            User user = new User(userDto.getUserId());
+            user.setCoverUrl(userDto.getCoverUrl());
+            user.setFullName(userDto.getFullname());
+            user.setDescription(userDto.getDescription());
+            user.setFollowers(userDto.getFollowers());
+            user.setEmail(userDto.getEmail());
+            user.setPassword(userDto.getPassword());
+            user.setUserName(userDto.getUserName());
+
+            apiResponse.setBody(user);
         }
         return apiResponse;
     }

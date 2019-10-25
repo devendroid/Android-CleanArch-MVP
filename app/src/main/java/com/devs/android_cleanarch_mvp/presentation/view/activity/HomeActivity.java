@@ -22,18 +22,19 @@ import com.google.android.material.navigation.NavigationView;
 
 import javax.inject.Inject;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+/**
+ * Created by Deven on 2019-10-01.
+ */
+public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    @Inject  Navigator navigator;
+
 
     private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        ((MyApplication)getApplication()).getAppComponent().inject(this);
+        setContentView(R.layout.activity_home);
 
         navigator.replaceFragment(this,R.id.fragment_container, new UserListFrag());
 

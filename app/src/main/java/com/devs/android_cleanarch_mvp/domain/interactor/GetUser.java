@@ -16,18 +16,32 @@ import io.reactivex.Observable;
  * This class is an implementation of {@link UseCase} that represents a use case for
  * retrieving a collection of all {@link User}.
  */
-public class GetUser extends UseCase<ApiResponse<User>, Void>{
+public class GetUser extends UseCase<ApiResponse<User>, GetUser.Params>{
 
     private UserRepository userRepository;
 
 
     public GetUser(UserRepository userRepository) {
+        super();
         this.userRepository = userRepository;
     }
 
 
     @Override
-    Observable<ApiResponse<User>> buildUseCaseObservable(Void aVoid) {
-        return userRepository.loggedUser();
+    Observable<ApiResponse<User>> buildUseCaseObservable(GetUser.Params params) {
+        return userRepository.user(params.userId);
+    }
+
+    public static final class Params {
+
+        private final int userId;
+
+        private Params(int userId) {
+            this.userId = userId;
+        }
+
+        public static Params forUser(int userId) {
+            return new Params(userId);
+        }
     }
 }

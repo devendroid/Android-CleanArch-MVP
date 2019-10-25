@@ -19,6 +19,9 @@ public interface RestApi {
     @GET("users.json")
     Observable<Response<List<UserDto>>> userDtoList();
 
+    @GET("login.json")
+    Observable<Response<UserDto>> userLogin();
+
 
     //https://api.stackexchange.com/2.2/questions/11227809/answers?order=desc&sort=activity&site=stackoverflow&filter=withbody
   //  @GET("questions/{qid}/answers?order=desc&sort=votes&site=stackoverflow&page=1&pagesize=10&filter=withbody")
